@@ -1,0 +1,55 @@
+1) Add Dependencies.----
+
+<!--Swagger -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+
+
+2) Application.properties.-----
+
+spring.mvc.pathmatch.matching-strategy=ANT_PATH_MATCHER
+springfox.documentation.swagger.v2.path=/swagger.json
+
+
+3) SwaggerConfig class-----
+
+package com.swagger.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+@Configuration
+@EnableSwagger2
+public class SwaggerConfig {
+
+    @Bean
+    public Docket api(){
+        return new Docket(DocumentationType.SWAGGER_2).select().paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.swagger.controller")).build();
+    }
+}
+
+
+
+4)  class level annotations.-----
+@Api(value = "Swagger implementation ", description = "@Api -> Apiclass level annotation. This REST Api related to Welcome Message!!!!")
+
+5)  Api method level----
+    @ApiOperation(value = " @ApiOperation -> Http method level. Get Welcome Message For The Given Name ", response = String.class, tags = "getWelcomeNote")
+
+
+
